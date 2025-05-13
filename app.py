@@ -6,11 +6,7 @@ from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.output_parsers import PydanticOutputParser
-from dotenv import load_dotenv
 import random
-
-# Load environment variables
-load_dotenv()
 
 # Page configuration with kid-friendly icon
 st.set_page_config(
@@ -347,12 +343,11 @@ with st.sidebar:
     st.sidebar.image("https://framerusercontent.com/images/3Ca34Pogzn9I3a7uTsNSlfs9Bdk.png", use_container_width=True)
     st.header("Story Settings")
     
-    # Use environment variable if available, otherwise hide API key input
-    api_key = os.getenv("SUTRA_API_KEY", "")
+    # API key input with link to get key
+    st.markdown("Get your API key from [Two AI Sutra](https://www.two.ai/sutra/api)")
+    api_key = st.text_input("Sutra API Key", value="", type="password")
     if not api_key:
-        api_key = st.text_input("Sutra API Key", value="", type="password")
-        if not api_key:
-            st.warning("Please set your Sutra API Key as an environment variable or enter it above")
+        st.warning("Please enter your Sutra API Key to continue")
     
     # Language selection
     selected_language = st.selectbox("Story Language:", languages)
